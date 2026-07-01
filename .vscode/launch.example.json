@@ -1,0 +1,19 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Run RuoYiApplication",
+      "request": "launch",
+      "mainClass": "com.ruoyi.RuoYiApplication",
+      "projectName": "ruoyi-admin",
+      "env": {
+        "DB_URL": "jdbc:mysql://localhost:3306/ry-vue?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8",
+        "DB_USERNAME": "root",
+        "DB_PASSWORD": "change-me",
+        "DRUID_LOGIN_USERNAME": "ruoyi",
+        "DRUID_LOGIN_PASSWORD": "change-me"
+      }
+    }
+  ]
+}

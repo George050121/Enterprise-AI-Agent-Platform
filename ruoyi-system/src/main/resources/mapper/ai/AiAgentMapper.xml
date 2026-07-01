@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.ai.mapper.AiAgentMapper">
+    
+    <resultMap type="AiAgent" id="AiAgentResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="description"    column="description"    />
+        <result property="modelProvider"    column="model_provider"    />
+        <result property="modelName"    column="model_name"    />
+        <result property="systemPrompt"    column="system_prompt"    />
+        <result property="temperature"    column="temperature"    />
+        <result property="status"    column="status"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectAiAgentVo">
+        select id, name, description, model_provider, model_name, system_prompt, temperature, status, create_by, create_time, update_by, update_time, remark from ai_agent
+    </sql>
+
+    <select id="selectAiAgentList" parameterType="AiAgent" resultMap="AiAgentResult">
+        <include refid="selectAiAgentVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="description != null  and description != ''"> and description = #{description}</if>
+            <if test="modelProvider != null  and modelProvider != ''"> and model_provider = #{modelProvider}</if>
+            <if test="modelName != null  and modelName != ''"> and model_name like concat('%', #{modelName}, '%')</if>
+            <if test="systemPrompt != null  and systemPrompt != ''"> and system_prompt = #{systemPrompt}</if>
+            <if test="temperature != null "> and temperature = #{temperature}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectAiAgentById" parameterType="Long" resultMap="AiAgentResult">
+        <include refid="selectAiAgentVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertAiAgent" parameterType="AiAgent" useGeneratedKeys="true" keyProperty="id">
+        insert into ai_agent
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">name,</if>
+            <if test="description != null">description,</if>
+            <if test="modelProvider != null and modelProvider != ''">model_provider,</if>
+            <if test="modelName != null and modelName != ''">model_name,</if>
+            <if test="systemPrompt != null">system_prompt,</if>
+            <if test="temperature != null">temperature,</if>
+            <if test="status != null">status,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="description != null">#{description},</if>
+            <if test="modelProvider != null and modelProvider != ''">#{modelProvider},</if>
+            <if test="modelName != null and modelName != ''">#{modelName},</if>
+            <if test="systemPrompt != null">#{systemPrompt},</if>
+            <if test="temperature != null">#{temperature},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAiAgent" parameterType="AiAgent">
+        update ai_agent
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="modelProvider != null and modelProvider != ''">model_provider = #{modelProvider},</if>
+            <if test="modelName != null and modelName != ''">model_name = #{modelName},</if>
+            <if test="systemPrompt != null">system_prompt = #{systemPrompt},</if>
+            <if test="temperature != null">temperature = #{temperature},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAiAgentById" parameterType="Long">
+        delete from ai_agent where id = #{id}
+    </delete>
+
+    <delete id="deleteAiAgentByIds" parameterType="String">
+        delete from ai_agent where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
